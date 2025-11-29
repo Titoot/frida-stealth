@@ -89,7 +89,7 @@ jobs:
           SERVER="frida/build/frida-android-arm64/bin/frida-server"
           
           # Run the script from the stealth-repo directory
-          python stealth-repo/src/anti-anti-frida.py $AGENT $GADGET $INJECT $PORTAL $SERVER
+          python frida/frida-core/src/anti-anti-frida.py $AGENT $GADGET $INJECT $PORTAL $SERVER
 
       # 10. Upload Artifacts
       - name: Upload Artifacts
