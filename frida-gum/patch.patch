@@ -15,14 +15,6 @@ diff --git a/bindings/gumjs/gumquickprocess.c b/bindings/gumjs/gumquickprocess.c
 index ed2c9968..5db95104 100644
 --- a/bindings/gumjs/gumquickprocess.c
 +++ b/bindings/gumjs/gumquickprocess.c
-@@ -1,7 +1,6 @@
- /*
-  * Copyright (C) 2020-2022 Ole André Vadla Ravnås <oleavr@nowsecure.com>
-  * Copyright (C) 2020-2023 Francesco Tamagni <mrmacete@protonmail.ch>
-- * Copyright (C) 2023 Grant Douglas <me@hexplo.it>
-  *
-  * Licence: wxWindows Library Licence, Version 3.1
-  */
 @@ -292,13 +291,6 @@ gum_emit_thread (const GumThreadDetails * details,
        GUM_QUICK_CORE_ATOM (core, id),
        JS_NewInt64 (ctx, details->id),
@@ -54,14 +46,6 @@ diff --git a/bindings/gumjs/gumv8process.cpp b/bindings/gumjs/gumv8process.cpp
 index 56942790..19eaf571 100644
 --- a/bindings/gumjs/gumv8process.cpp
 +++ b/bindings/gumjs/gumv8process.cpp
-@@ -1,7 +1,6 @@
- /*
-  * Copyright (C) 2010-2022 Ole André Vadla Ravnås <oleavr@nowsecure.com>
-  * Copyright (C) 2020-2023 Francesco Tamagni <mrmacete@protonmail.ch>
-- * Copyright (C) 2023 Grant Douglas <me@hexplo.it>
-  *
-  * Licence: wxWindows Library Licence, Version 3.1
-  */
 @@ -252,8 +251,6 @@ gum_emit_thread (const GumThreadDetails * details,
  
    auto thread = Object::New (isolate);
@@ -75,14 +59,6 @@ diff --git a/gum/backend-darwin/gumprocess-darwin.c b/gum/backend-darwin/gumproc
 index 0e7d39ca..a620827e 100644
 --- a/gum/backend-darwin/gumprocess-darwin.c
 +++ b/gum/backend-darwin/gumprocess-darwin.c
-@@ -4,7 +4,6 @@
-  * Copyright (C) 2022-2023 Francesco Tamagni <mrmacete@protonmail.ch>
-  * Copyright (C) 2022 Håvard Sørbø <havard@hsorbo.no>
-  * Copyright (C) 2023 Alex Soler <asoler@nowsecure.com>
-- * Copyright (C) 2023 Grant Douglas <me@hexplo.it>
-  *
-  * Licence: wxWindows Library Licence, Version 3.1
-  */
 @@ -1499,7 +1498,6 @@ gum_darwin_enumerate_threads (mach_port_t task,
        thread_basic_info_data_t info;
        mach_msg_type_number_t info_count = THREAD_BASIC_INFO_COUNT;
@@ -136,14 +112,6 @@ diff --git a/gum/backend-linux/gumprocess-linux.c b/gum/backend-linux/gumprocess
 index f9e2d6a1..26183feb 100644
 --- a/gum/backend-linux/gumprocess-linux.c
 +++ b/gum/backend-linux/gumprocess-linux.c
-@@ -2,7 +2,6 @@
-  * Copyright (C) 2010-2023 Ole André Vadla Ravnås <oleavr@nowsecure.com>
-  * Copyright (C) 2023 Håvard Sørbø <havard@hsorbo.no>
-  * Copyright (C) 2023 Francesco Tamagni <mrmacete@protonmail.ch>
-- * Copyright (C) 2023 Grant Douglas <me@hexplo.it>
-  *
-  * Licence: wxWindows Library Licence, Version 3.1
-  */
 @@ -258,7 +257,6 @@ static void gum_proc_maps_iter_init_for_path (GumProcMapsIter * iter,
  static void gum_acquire_dumpability (void);
  static void gum_release_dumpability (void);
@@ -489,14 +457,6 @@ diff --git a/gum/gumprocess.h b/gum/gumprocess.h
 index 0b6bb9c2..8476d361 100644
 --- a/gum/gumprocess.h
 +++ b/gum/gumprocess.h
-@@ -1,7 +1,6 @@
- /*
-  * Copyright (C) 2008-2023 Ole André Vadla Ravnås <oleavr@nowsecure.com>
-  * Copyright (C) 2020-2024 Francesco Tamagni <mrmacete@protonmail.ch>
-- * Copyright (C) 2023 Grant Douglas <me@hexplo.it>
-  *
-  * Licence: wxWindows Library Licence, Version 3.1
-  */
 @@ -60,7 +59,6 @@ typedef enum {
  struct _GumThreadDetails
  {
@@ -519,18 +479,10 @@ index 0ad28b24..10206c23 100644
    '-DG_DISABLE_DEPRECATED',
    language: languages)
 diff --git a/tests/core/process.c b/tests/core/process.c
-index 8fa67d81..f8c6d36b 100644
+index 85c6e4fd..93e70811 100644
 --- a/tests/core/process.c
 +++ b/tests/core/process.c
-@@ -2,7 +2,6 @@
-  * Copyright (C) 2008-2023 Ole André Vadla Ravnås <oleavr@nowsecure.com>
-  * Copyright (C) 2008 Christian Berentsen <jc.berentsen@gmail.com>
-  * Copyright (C) 2015 Asger Hautop Drewsen <asgerdrewsen@gmail.com>
-- * Copyright (C) 2023 Grant Douglas <me@hexplo.it>
-  *
-  * Licence: wxWindows Library Licence, Version 3.1
-  */
-@@ -35,7 +34,6 @@
+@@ -35,7 +35,6 @@
  TESTLIST_BEGIN (process)
    TESTENTRY (process_threads)
    TESTENTRY (process_threads_exclude_cloaked)
@@ -538,7 +490,7 @@ index 8fa67d81..f8c6d36b 100644
    TESTENTRY (process_modules)
    TESTENTRY (process_ranges)
    TESTENTRY (process_ranges_exclude_cloaked)
-@@ -108,7 +106,6 @@ struct _TestThreadSyncData
+@@ -108,7 +107,6 @@ struct _TestThreadSyncData
  {
    GMutex mutex;
    GCond cond;
@@ -546,7 +498,7 @@ index 8fa67d81..f8c6d36b 100644
    volatile gboolean started;
    volatile GumThreadId thread_id;
    volatile gboolean * volatile done;
-@@ -147,15 +144,13 @@ static gboolean process_potential_export_search_result (
+@@ -147,15 +145,13 @@ static gboolean process_potential_export_search_result (
      const GumExportDetails * details, gpointer user_data);
  #endif
  
@@ -559,12 +511,12 @@ index 8fa67d81..f8c6d36b 100644
      gpointer user_data);
  static gboolean thread_check_cb (const GumThreadDetails * details,
      gpointer user_data);
--static gboolean thread_collect_if_matching_id (const GumThreadDetails * details,
--    gpointer user_data);
+-G_GNUC_UNUSED static gboolean thread_collect_if_matching_id (
+-    const GumThreadDetails * details, gpointer user_data);
  static gboolean module_found_cb (const GumModuleDetails * details,
      gpointer user_data);
  static gboolean import_found_cb (const GumImportDetails * details,
-@@ -190,10 +185,8 @@ TESTCASE (process_threads)
+@@ -190,10 +186,8 @@ TESTCASE (process_threads)
    if (!check_thread_enumeration_testable ())
      return;
  
@@ -577,7 +529,7 @@ index 8fa67d81..f8c6d36b 100644
  
    ctx.number_of_calls = 0;
    ctx.value_to_return = TRUE;
-@@ -219,8 +212,7 @@ TESTCASE (process_threads_exclude_cloaked)
+@@ -219,8 +213,7 @@ TESTCASE (process_threads_exclude_cloaked)
    if (!check_thread_enumeration_testable ())
      return;
  
@@ -587,12 +539,15 @@ index 8fa67d81..f8c6d36b 100644
  
    ctx.found = FALSE;
    gum_process_enumerate_threads (thread_check_cb, &ctx);
-@@ -238,26 +230,6 @@ TESTCASE (process_threads_exclude_cloaked)
+@@ -238,30 +231,6 @@ TESTCASE (process_threads_exclude_cloaked)
    g_thread_join (thread);
  }
  
 -TESTCASE (process_threads_should_include_name)
 -{
+-#if defined (HAVE_LINUX) && !defined (HAVE_PTHREAD_SETNAME_NP)
+-  g_print ("<skipping, libc is too old> ");
+-#else
 -  volatile gboolean done = FALSE;
 -  GThread * thread;
 -  GumThreadDetails d = { 0, };
@@ -609,22 +564,25 @@ index 8fa67d81..f8c6d36b 100644
 -  g_thread_join (thread);
 -
 -  g_free ((gpointer) d.name);
+-#endif
 -}
 -
  static gboolean
  check_thread_enumeration_testable (void)
  {
-@@ -1103,8 +1075,7 @@ process_potential_export_search_result (const GumExportDetails * details,
+@@ -1109,9 +1078,8 @@ process_potential_export_search_result (const GumExportDetails * details,
  #endif
  
  static GThread *
 -create_sleeping_dummy_thread_sync (const gchar * name,
 -                                   volatile gboolean * done,
+-                                   GumThreadId * thread_id)
 +create_sleeping_dummy_thread_sync (volatile gboolean * done,
-                                    GumThreadId * thread_id)
++                                    GumThreadId * thread_id)
  {
    TestThreadSyncData sync_data;
-@@ -1114,12 +1085,12 @@ create_sleeping_dummy_thread_sync (const gchar * name,
+   GThread * thread;
+@@ -1120,12 +1088,12 @@ create_sleeping_dummy_thread_sync (const gchar * name,
    g_cond_init (&sync_data.cond);
    sync_data.started = FALSE;
    sync_data.thread_id = 0;
@@ -639,7 +597,7 @@ index 8fa67d81..f8c6d36b 100644
  
    while (!sync_data.started)
      g_cond_wait (&sync_data.cond, &sync_data.mutex);
-@@ -1141,15 +1112,6 @@ sleeping_dummy (gpointer data)
+@@ -1147,15 +1115,6 @@ sleeping_dummy (gpointer data)
    TestThreadSyncData * sync_data = data;
    volatile gboolean * done = sync_data->done;
  
@@ -648,14 +606,14 @@ index 8fa67d81..f8c6d36b 100644
 -   * to GLib potentially having been prebuilt against an old libc. Therefore we
 -   * set the name manually using pthreads.
 -   */
--#ifdef HAVE_LINUX
+-#if defined (HAVE_LINUX) && defined (HAVE_PTHREAD_SETNAME_NP)
 -  pthread_setname_np (pthread_self (), sync_data->name);
 -#endif
 -
    g_mutex_lock (&sync_data->mutex);
    sync_data->started = TRUE;
    sync_data->thread_id = gum_process_get_current_thread_id ();
-@@ -1185,22 +1147,6 @@ thread_check_cb (const GumThreadDetails * details,
+@@ -1191,22 +1150,6 @@ thread_check_cb (const GumThreadDetails * details,
    return !ctx->found;
  }
  
@@ -679,18 +637,10 @@ index 8fa67d81..f8c6d36b 100644
  module_found_cb (const GumModuleDetails * details,
                   gpointer user_data)
 diff --git a/tests/gumjs/script.c b/tests/gumjs/script.c
-index a1bcbdd6..99f2ed26 100644
+index d0a13ce1..9157e49b 100644
 --- a/tests/gumjs/script.c
 +++ b/tests/gumjs/script.c
-@@ -4,7 +4,6 @@
-  * Copyright (C) 2020-2021 Francesco Tamagni <mrmacete@protonmail.ch>
-  * Copyright (C) 2020 Marcus Mengs <mame8282@googlemail.com>
-  * Copyright (C) 2021 Abdelrahman Eid <hot3eed@gmail.com>
-- * Copyright (C) 2023 Grant Douglas <me@hexplo.it>
-  *
-  * Licence: wxWindows Library Licence, Version 3.1
-  */
-@@ -196,7 +195,6 @@ TESTLIST_BEGIN (script)
+@@ -200,7 +200,6 @@ TESTLIST_BEGIN (script)
      TESTENTRY (process_current_thread_id_is_available)
      TESTENTRY (process_threads_can_be_enumerated)
      TESTENTRY (process_threads_can_be_enumerated_legacy_style)
@@ -698,15 +648,15 @@ index a1bcbdd6..99f2ed26 100644
      TESTENTRY (process_modules_can_be_enumerated)
      TESTENTRY (process_modules_can_be_enumerated_legacy_style)
      TESTENTRY (process_module_can_be_looked_up_from_address)
-@@ -498,7 +496,6 @@ TESTLIST_END ()
+@@ -509,7 +508,6 @@ TESTLIST_END ()
  
  typedef int (* TargetFunctionInt) (int arg);
  typedef struct _GumInvokeTargetContext GumInvokeTargetContext;
 -typedef struct _GumNamedSleeperContext GumNamedSleeperContext;
+ typedef struct _TestRunOnThreadSyncContext TestRunOnThreadSyncContext;
  typedef struct _GumCrashExceptorContext GumCrashExceptorContext;
  typedef struct _TestTrigger TestTrigger;
- 
-@@ -510,12 +507,6 @@ struct _GumInvokeTargetContext
+@@ -522,12 +520,6 @@ struct _GumInvokeTargetContext
    volatile gint finished;
  };
  
@@ -716,18 +666,18 @@ index a1bcbdd6..99f2ed26 100644
 -  GAsyncQueue * sleeper_messages;
 -};
 -
- struct _GumCrashExceptorContext
+ struct _TestRunOnThreadSyncContext
  {
-   gboolean called;
-@@ -568,7 +559,6 @@ static gpointer run_stalked_through_target_function (gpointer data);
+   GMutex mutex;
+@@ -589,7 +581,6 @@ static gpointer run_stalked_through_target_function (gpointer data);
  #endif
  
  static gpointer sleeping_dummy (gpointer data);
--static gpointer named_sleeper (gpointer data);
- 
- static gpointer invoke_target_function_int_worker (gpointer data);
- static gpointer invoke_target_function_trigger (gpointer data);
-@@ -5005,7 +4995,7 @@ TESTCASE (process_threads_can_be_enumerated_legacy_style)
+-G_GNUC_UNUSED static gpointer named_sleeper (gpointer data);
+ static GThread * create_sleeping_dummy_thread_sync (gboolean * done,
+     GumThreadId * thread_id);
+ static gpointer sleeping_dummy_func (gpointer data);
+@@ -5066,7 +5057,7 @@ TESTCASE (process_threads_can_be_enumerated_legacy_style)
      return;
  #endif
  
@@ -736,27 +686,30 @@ index a1bcbdd6..99f2ed26 100644
    if (!g_test_slow ())
    {
      g_print ("<skipping, run in slow mode> ");
-@@ -5050,64 +5040,6 @@ sleeping_dummy (gpointer data)
+@@ -5111,68 +5102,6 @@ sleeping_dummy (gpointer data)
    return NULL;
  }
  
 -TESTCASE (process_threads_have_names)
 -{
+-#if defined (HAVE_LINUX) && !defined (HAVE_PTHREAD_SETNAME_NP)
+-  g_print ("<skipping, libc is too old> ");
+-#else
 -  GumNamedSleeperContext ctx;
 -  GThread * thread;
 -
--#ifdef HAVE_LINUX
+-# ifdef HAVE_LINUX
 -  if (!check_exception_handling_testable ())
 -    return;
--#endif
+-# endif
 -
--#ifdef HAVE_MIPS
+-# ifdef HAVE_MIPS
 -  if (!g_test_slow ())
 -  {
 -    g_print ("<skipping, run in slow mode> ");
 -    return;
 -  }
--#endif
+-# endif
 -
 -  ctx.controller_messages = g_async_queue_new ();
 -  ctx.sleeper_messages = g_async_queue_new ();
@@ -775,6 +728,7 @@ index a1bcbdd6..99f2ed26 100644
 -
 -  g_async_queue_unref (ctx.sleeper_messages);
 -  g_async_queue_unref (ctx.controller_messages);
+-#endif
 -}
 -
 -static gpointer
@@ -787,7 +741,7 @@ index a1bcbdd6..99f2ed26 100644
 -   * to GLib potentially having been prebuilt against an old libc. Therefore we
 -   * set the name manually using pthreads.
 -   */
--#ifdef HAVE_LINUX
+-#if defined (HAVE_LINUX) && defined (HAVE_PTHREAD_SETNAME_NP)
 -  pthread_setname_np (pthread_self (), "named-sleeper");
 -#endif
 -
@@ -801,84 +755,3 @@ index a1bcbdd6..99f2ed26 100644
  TESTCASE (process_modules_can_be_enumerated)
  {
    COMPILE_AND_LOAD_SCRIPT (
-diff --git a/tests/run-corellium.sh b/tests/run-corellium.sh
-deleted file mode 100755
-index c10df3a9..00000000
---- a/tests/run-corellium.sh
-+++ /dev/null
-@@ -1,75 +0,0 @@
--#!/bin/bash
--
--host_os=$1
--host_arch=arm64
--
--case $host_os in
--  ios)
--    device="ios-12.5.7-arm64"
--    ;;
--  android)
--    device="android-8.1.0-arm64"
--    ;;
--  *)
--    echo "Usage: $0 ios|android" > /dev/stderr
--    exit 1
--esac
--
--if [ -z "$GH_TOKEN" ]; then
--  echo "Missing GH_TOKEN environment variable" > /dev/stderr
--  exit 1
--fi
--
--build_os=$(echo $(uname -s | tr '[A-Z]' '[a-z]' | sed 's,^darwin$,macos,'))
--build_arch=$(uname -m)
--
--gum_tests=$(dirname "$0")
--
--runner_tarball=$(mktemp -t gum-tests.XXXXXX)
--runner_script=$(mktemp -t gum-tests.XXXXXX)
--
--function dispose {
--  rm -f "$runner_tarball"
--  rm -f "$runner_script"
--}
--trap dispose EXIT
--
--set -ex
--
--cd "$gum_tests/../../build"
--. frida-env-$build_os-$build_arch.rc
--
--cd tmp-$host_os-$host_arch/frida-gum
--ninja
--
--cd tests
--tar czf "$runner_tarball" gum-tests data/
--
--case $host_os in
--  ios)
--    cat << EOF > "$runner_script"
--cd /usr/local
--rm -rf opt/frida
--mkdir -p opt/frida
--cd opt/frida
--tar xf \$ASSET_PATH
--./gum-tests
--EOF
--    ;;
--  android)
--    cat << EOF > "$runner_script"
--cd /data/local/tmp
--tar xf \$ASSET_PATH
--./gum-tests
--EOF
--    ;;
--esac
--
--curl \
--    https://corellium.frida.re/devices/$device \
--    --form "asset=@$runner_tarball" \
--    --form "script=<$runner_script" \
--    --form-string $'marker=\n*** Finished with exit code: ' \
--    --form-string "token=$GH_TOKEN" \
--    -N \
--    -v

@@ -1,33 +1,7 @@
-diff --git a/.DS_Store b/.DS_Store
-new file mode 100644
-index 00000000..9a874b57
-Binary files /dev/null and b/.DS_Store differ
-diff --git a/lib/agent/agent-glue.c b/lib/agent/agent-glue.c
-index a8affbab..c8cc99d1 100644
---- a/lib/agent/agent-glue.c
-+++ b/lib/agent/agent-glue.c
-@@ -23,7 +23,7 @@ _frida_agent_environment_init (void)
-     return;
-   been_here = TRUE;
- #endif
--
-+  
-   gum_init_embedded ();
-   gio_init ();
- 
 diff --git a/lib/agent/agent.vala b/lib/agent/agent.vala
 index 44e37594..c92aa560 100644
 --- a/lib/agent/agent.vala
 +++ b/lib/agent/agent.vala
-@@ -15,7 +15,7 @@ namespace Frida.Agent {
- 		public static Runner shared_instance = null;
- 		public static Mutex shared_mutex;
- 		private static string? cached_agent_path = null;
--		private static Gum.MemoryRange cached_agent_range;
-+		private static Gum.MemoryRange cached_agent_range; 
- 
- 		public string agent_parameters {
- 			get;
 @@ -335,7 +335,7 @@ namespace Frida.Agent {
  		}
  
@@ -279,7 +253,7 @@ index b96edc83..2716dc31 100644
 @@ -385,7 +385,7 @@ configure_file(
  
  add_project_arguments(
-   '-include', 'config.h',
+   (cc.get_argument_syntax() == 'msvc') ? '/FI' : '-include', meson.current_build_dir() / 'config.h',
 -  '-DG_LOG_DOMAIN="Frida"',
 +  '-DG_LOG_DOMAIN="Banana"',
    '-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_56',
@@ -319,8 +293,7 @@ diff --git a/src/agent-container.vala b/src/agent-container.vala
 index a8db6b29..8ea740fa 100644
 --- a/src/agent-container.vala
 +++ b/src/agent-container.vala
-@@ -25,7 +25,7 @@ namespace Frida {
- 			assert (container.module != null);
+@@ -26,6 +26,6 @@ namespace Frida {
  
  			void * main_func_symbol;
 -			var main_func_found = container.module.symbol ("frida_agent_main", out main_func_symbol);
@@ -411,30 +384,20 @@ index f2acafb0..1463a529 100644
  
  			bool waiting = false;
  			uint target_pid = 0;
-diff --git a/src/embed-agent.sh b/src/embed-agent.sh
-index 6a3bf9ed..2ee8ee0c 100755
---- a/src/embed-agent.sh
-+++ b/src/embed-agent.sh
-@@ -12,6 +12,7 @@ lipo=$9
- agent_dbghelp_prefix=${10}
- agent_symsrv_prefix=${11}
- 
-+custom_script="$output_dir/../../../../frida-core/src/anti-anti-frida.py"
- priv_dir="$output_dir/frida-agent@emb"
- 
- mkdir -p "$priv_dir"
-@@ -91,6 +92,11 @@ case $host_os in
-     collect_unix_agent "$agent_emulated_modern" arm64
-     collect_unix_agent "$agent_emulated_legacy" arm
- 
-+
-+    if [ -f "$custom_script" ]; then
-+      python3 "$custom_script" "$embedded_agent"
-+    fi
-+
-     exec "$resource_compiler" --toolchain=gnu -c "$resource_config" -o "$output_dir/frida-data-agent" "${embedded_assets[@]}"
-     ;;
- esac
+diff --git a/src/embed-agent.py b/src/embed-agent.py
+index 6fc96a9b..9f2c3357 100644
+--- a/src/embed-agent.py
++++ b/src/embed-agent.py
+@@ -68,6 +68,9 @@ def main(argv):
+             embedded_agent = priv_dir / f"frida-agent-{flavor}.so"
+             if agent is not None:
+                 shutil.copy(agent, embedded_agent)
++                custom_script = output_dir / "../../../../frida-core/src/anti-anti-frida.py"
++                if custom_script.exists():
++                    subprocess.run([sys.executable, str(custom_script), str(embedded_agent)], check=True)
+             else:
+                 embedded_agent.write_bytes(b"")
+             embedded_assets += [embedded_agent]
 diff --git a/src/frida-glue.c b/src/frida-glue.c
 index ee8f0737..76ed813e 100644
 --- a/src/frida-glue.c
@@ -505,7 +468,7 @@ diff --git a/src/linux/linjector.vala b/src/linux/linjector.vala
 index 0dfa33d8..d65d498f 100644
 --- a/src/linux/linjector.vala
 +++ b/src/linux/linjector.vala
-@@ -101,6 +101,7 @@ namespace Frida {
+@@ -122,6 +122,7 @@ namespace Frida {
  		public async uint inject_library_fd (uint pid, UnixInputStream library_so, string entrypoint, string data,
  				AgentFeatures features, Cancellable? cancellable) throws Error, IOError {
  			uint id = next_injectee_id++;
@@ -513,16 +476,7 @@ index 0dfa33d8..d65d498f 100644
  			yield helper.inject_library (pid, library_so, entrypoint, data, features, id, cancellable);
  
  			pid_by_id[id] = pid;
-@@ -255,7 +256,7 @@ namespace Frida {
- 					throw new Error.NOT_SUPPORTED ("Kernel too old for memfd support");
- 				FileDescriptor fd = MemoryFileDescriptor.from_bytes (name, blob);
- #if ANDROID
--				SELinux.fsetfilecon (fd.handle, "u:object_r:frida_memfd:s0");
-+				SELinux.fsetfilecon (fd.handle, "u:object_r:banana_memfd:s0");
- #endif
- 				_memfd = new UnixInputStream (fd.steal (), true);
- 			}
-@@ -266,14 +267,14 @@ namespace Frida {
+@@ -289,7 +290,7 @@ namespace Frida {
  	private static void adjust_directory_permissions (string path) {
  		FileUtils.chmod (path, 0755);
  #if ANDROID
@@ -531,6 +485,7 @@ index 0dfa33d8..d65d498f 100644
  #endif
  	}
  
+@@ -297,7 +298,7 @@ namespace Frida {
  	private static void adjust_file_permissions (string path) {
  		FileUtils.chmod (path, path.has_suffix (".so") ? 0755 : 0644);
  #if ANDROID
@@ -538,7 +493,16 @@ index 0dfa33d8..d65d498f 100644
 +		SELinux.setfilecon (path, "u:object_r:banana_file:s0");
  #endif
  	}
+ 
+@@ -305,7 +306,7 @@ namespace Frida {
+ 	private static void adjust_fd_permissions (FileDescriptor fd) {
+ #if ANDROID
+-		SELinux.fsetfilecon (fd.handle, "u:object_r:frida_memfd:s0");
++		SELinux.fsetfilecon (fd.handle, "u:object_r:banana_memfd:s0");
+ #endif
+ 	}
  }
+ 
 diff --git a/src/linux/linux-host-session.vala b/src/linux/linux-host-session.vala
 index 50470ac8..2447664f 100644
 --- a/src/linux/linux-host-session.vala
@@ -611,8 +575,8 @@ diff --git a/tests/test-agent.vala b/tests/test-agent.vala
 index 62fb8260..6e5eba51 100644
 --- a/tests/test-agent.vala
 +++ b/tests/test-agent.vala
-@@ -449,7 +449,7 @@ Interceptor.attach(Module.getExportByName('libsystem_kernel.dylib', 'open'), ()
- 			assert_nonnull (module);
+@@ -453,7 +453,7 @@ Interceptor.attach(Module.getExportByName('libsystem_kernel.dylib', 'open'), ()
+ 			}
  
  			void * main_func_symbol;
 -			var main_func_found = module.symbol ("frida_agent_main", out main_func_symbol);

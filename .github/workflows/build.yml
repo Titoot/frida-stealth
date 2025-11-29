@@ -1,4 +1,4 @@
-name: Build Stealth Frida 16.2.1
+name: Build Stealth Frida 16.2.2
 
 on:
   workflow_dispatch: # Allows manual triggering
@@ -48,10 +48,10 @@ jobs:
         with:
           ndk-version: r25c # r25c maps to 25.2.9519653
 
-      # 6. Clone Frida 16.2.1
-      - name: Clone Frida (v16.2.1)
+      # 6. Clone Frida 16.2.2
+      - name: Clone Frida (v16.2.2)
         run: |
-          git clone --recurse-submodules --branch 16.2.1 https://github.com/frida/frida.git frida
+          git clone --recurse-submodules --branch 16.2.2 https://github.com/frida/frida.git frida
 
       # 7. Apply Patches
       - name: Apply Patches
