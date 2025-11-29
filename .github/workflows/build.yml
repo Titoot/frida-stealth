@@ -97,20 +97,28 @@ jobs:
           PORTAL=$(find $BUILD_ROOT -name "frida-portal" | grep "subprojects/frida-core" | head -n 1)
           
           echo "Found:"
-          echo "Agent: $AGENT"
-          echo "Gadget: $GADGET"
-          echo "Server: $SERVER"
+          echo "AGENT: $AGENT"
+          echo "GADGET: $GADGET"
+          echo "SERVER: $SERVER"
+          echo "INJECT: $INJECT"
+          echo "PORTAL: $PORTAL"
           
           # Run the obfuscation
           python "$SCRIPT" $AGENT $GADGET $INJECT $PORTAL $SERVER
 
-          # Create a nice folder for artifacts to upload
           mkdir -p stealth-artifacts
-          [ -f "$AGENT" ] && cp "$AGENT" stealth-artifacts/
-          [ -f "$GADGET" ] && cp "$GADGET" stealth-artifacts/
-          [ -f "$SERVER" ] && cp "$SERVER" stealth-artifacts/
-          [ -f "$INJECT" ] && cp "$INJECT" stealth-artifacts/
-          [ -f "$PORTAL" ] && cp "$PORTAL" stealth-artifacts/
+
+          for f in "$AGENT" "$GADGET" "$SERVER" "$INJECT" "$PORTAL"; do
+            if [ -n "$f" ] && [ -f "$f" ]; then
+               echo "Copying $f..."
+               cp "$f" stealth-artifacts/
+            else
+               echo "Skipping missing file (was empty or not found)"
+            fi
+          done
+          
+          echo "Contents of artifacts folder:"
+          ls -lh stealth-artifacts/
       # 10. Upload Artifacts
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
