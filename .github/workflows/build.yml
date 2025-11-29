@@ -8,9 +8,9 @@ jobs:
     runs-on: ubuntu-22.04
     
     steps:
-      # 1. Clean up disk space because Frida builds are HUGE
+      # 1. Clean up disk space (Fixed Action Name)
       - name: Free Disk Space
-        uses: jlumbroso/free-disk-space-action@v1.3.1
+        uses: jlumbroso/free-disk-space@v1.3.1
         with:
           tool-cache: false
           android: false # We need Android, but we will install specific NDK later
