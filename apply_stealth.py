@@ -168,8 +168,9 @@ def inject_embed_agent(base_dir, dry_run=False):
     embed_script = base_dir / "subprojects" / "frida-core" / "src" / "embed-agent.py"
     if not embed_script.exists(): return
     
-    hook_point = 'shutil.copy(agent, embedded_agent)'
+    hook_point = 'if agent is not None:'
     injection = """
+            if agent is not None:
                 shutil.copy(agent, embedded_agent)
                 # --- STEALTH INJECTION ---
                 try:
