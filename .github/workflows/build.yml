@@ -78,7 +78,7 @@ jobs:
           cd frida
           ./configure --host=android-arm64
           cd build
-          ninja frida-server frida-inject frida-portal frida-gadget frida-agent
+          ninja
 
       # 9. Run Anti-Anti-Frida (Symbol Hiding)
       - name: Obfuscate Symbols
