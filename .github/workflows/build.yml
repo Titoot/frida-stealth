@@ -104,7 +104,7 @@ jobs:
           echo "PORTAL: $PORTAL"
           
           # Run the obfuscation
-          python "$SCRIPT" $AGENT $GADGET $INJECT $PORTAL $SERVER
+          #python "$SCRIPT" $AGENT $GADGET $INJECT $PORTAL $SERVER
 
           mkdir -p stealth-artifacts
 
