@@ -100,7 +100,7 @@ jobs:
           PORTAL=$(find $BUILD_ROOT -name "frida-portal" | grep "subprojects/frida-core" | head -n 1 || true)
           
           # Run Obfuscation (Patches internal symbols like frida_agent_main -> banana_main)
-          python "$SCRIPT" $AGENT $GADGET $SERVER $INJECT $PORTAL
+          #python "$SCRIPT" $AGENT $GADGET $SERVER $INJECT $PORTAL
 
           # Copy and RENAME artifacts
           mkdir -p stealth-artifacts
